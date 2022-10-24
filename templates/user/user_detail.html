@@ -1,0 +1,19 @@
+{% extends '_base.html' %}
+
+
+{% block content %}
+    <br><br><br>
+    <h2>Стараница пользователя</h2>
+    {% if my_user.image %}
+        {{ my_user.image }}
+    {% endif %}
+    <p>Ваше имя: {{ my_user.username }}</p>
+    <p>Ваш эмеил: {{ my_user.email }}</p>
+
+
+    <p><a href="{% url 'account_change_password' %}">Изменить пароль</a></p>
+    <p><a href="{% url 'account_email' %}">Емеил</a></p>
+    <p><a href="{% url 'account_reset_password' %}">Сброс пароля</a></p>
+
+
+{% endblock content %}

@@ -1,0 +1,12 @@
+[33mdb13ba2[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{0}: reset: moving to HEAD~1
+[33ma661ada[m HEAD@{1}: reset: moving to HEAD~1
+[33m68bece6[m HEAD@{2}: commit: sql
+[33ma661ada[m HEAD@{3}: reset: moving to HEAD~1
+[33m6a9912d[m HEAD@{4}: commit: postgres
+[33ma661ada[m HEAD@{5}: commit: f
+[33mdb13ba2[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m HEAD@{6}: commit: e
+[33m0ac0b14[m HEAD@{7}: commit: hf
+[33m65d5a82[m HEAD@{8}: commit: lor
+[33m9867fc2[m HEAD@{9}: commit: h
+[33ma3611e3[m HEAD@{10}: commit: h
+[33me0b05db[m HEAD@{11}: clone: from https://github.com/de-vard/defs.git

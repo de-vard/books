@@ -1,0 +1,19 @@
+<!-- templates/registration/login.html -->
+{% extends "_base.html" %}
+{% load static %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+
+{% block title %}Войти{% endblock title %}
+
+{% block content %}
+  <h2>Войти</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button class="btn btn-success" type="submit">Войти</button>
+  </form>
+  <h2>Войти через социальнные сети</h2>
+    <a href="{% provider_login_url 'github' %}"><img  width="50" height="50"  src="{% static 'images/GitHub.png' %}"></a>
+    <a href="{% provider_login_url 'vk' %}"><img  src="{% static 'images/vk.png' %}" height="50" width="50"></a>
+    {% endblock content %}

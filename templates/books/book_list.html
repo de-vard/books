@@ -1,0 +1,112 @@
+<!-- templates/books/book_list.html -->
+{% extends '_base.html' %}
+{% load spurl %}
+{% load book_tag %}
+
+{% block title %}Books{% endblock title %}
+
+
+
+{% block content %}
+<!-- Выбор по категориям  -->
+
+
+<div class="box" >
+        <form action="{% url 'filter' %}" method="get" name="filter">
+            <!-- Выбор по Категории -->
+            <div class="mini_box">
+              <h3>Категории</h3>
+                <ul>
+                  {% for category  in view.get_category %}
+                    <li>
+                      <input type="checkbox"  name="category" value="{{ category.id }}">
+                      <span>{{ category.name }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+
+              <!-- Выбор по Языку -->
+            <div class="mini_box">
+              <h3 >Язык</h3>
+                <ul>
+                  {% for lan in view.get_language %}
+                    <li>
+                      <input type="checkbox"  name="language" value="{{ lan.language }}" >
+                      <span>{{ lan.get_language_display }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+
+            <!-- Выбор по Года  -->
+            <div class="mini_box">
+              <h3>Года</h3>
+                <ul>
+                  {% for years in view.get_years %}
+                    <li  class="checked">
+                      <input type="checkbox"  name="come_out" value="{{ years.come_out }}">
+                      <span>{{ years.come_out }}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+            </div>
+        <div class="knopka">
+          <button type="submit">Найти</button>
+        </div>
+        </form>
+      </div>
+
+
+{% block sort %}
+<div>
+    <p><a href="{% url 'sort' pk=1 %}">Ценна возрастает +</a></p>
+    <p> <a href="{% url 'sort' pk=2 %}">Ценна убывает -</a></p>
+</div>
+{% endblock sort %}
+
+{% for book in book_list %}
+  {% if not book.draft %}
+    <div>
+      <br>
+        <h2><a href="{{ book.get_absolute_url }}">{{ book.title }}</a></h2>
+        <h5>Author: {{ book.author }} </h5>
+        <h5>language: {{ book.get_language_display }} </h5>
+        <h5>Price: {{ book.price }}</h5>
+        <h5>Book theme: {{ book.category }} </h5>
+      <br>
+      <hr>
+    </div>
+  {% endif %}
+  {% endfor %}
+{% endblock content %}
+
+<!-- Пагинация -->
+{% block pagination %}
+    <div class="pagination_rounded">
+          <nav aria-label="Page navigation example">
+              <ul>
+                {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                  <li>{{ p }}</li>
+                {% else %}
+
+                  <!-- django-spurl для пагинации в контроллере фильтров -->
+                <li>
+                  <a class="prev" href="{% spurl query=request.GET set_query='page={{ p }}'%}">{{ p }}</a>
+                </li>
+
+                  {% endif %}
+                {% endfor %}
+            </ul>
+            </nav>
+        </div>
+{% endblock pagination  %}
+
+
+
+
+
+
+
+

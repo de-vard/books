@@ -1,0 +1,21 @@
+<!-- templates/home.html -->
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+<br>
+{% block content %}
+  <br>
+  <h1>Добро пожаловать на мой первый сайт</h1>
+  <img class="bookcover" src="{% static 'images/mayk.jpg' %}">
+  <p>
+    В книге я не использовал Docker и PostgreSQL так как присал поект в ограниченной системы.
+   </p>
+  <p>
+    В этом сайте вы можете добавлять просматривать и читать книги для этого нужно зарегистрироваться и авторизоваться.
+  </p>
+#TODO: адрес /about/ без прявязки name
+
+{% endblock content %}
+
+

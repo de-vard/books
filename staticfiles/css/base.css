@@ -1,0 +1,32 @@
+h1{
+color:red;
+}
+
+.bookcover{
+    height: 500px;
+    width: 500px;
+    text-align: center;
+}
+
+.box{
+    display: table;
+
+    border: 1px solid #4287f5;
+    float: left;
+
+    width: 100%;
+    position: relative;
+
+}
+.mini_box{
+    display: table-cell;
+
+
+
+    text-align:center;
+}
+.knopka{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

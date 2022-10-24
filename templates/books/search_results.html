@@ -1,0 +1,36 @@
+<!-- templates/books/search_results.html -->
+
+{% extends '_base.html' %}
+
+{% block title %}Search{% endblock title %}
+
+{% block content %}
+<br><br>
+<h1>Search Results</h1>
+{% for book in book_list %}
+    <div>
+        <h3><a href="{{ book.get_absolute_url }}">{{ book.title }}</a> </h3>
+        <p>Author: {{ book.author }}</p>
+        <p>Price: $ {{ book.price }}</p>
+    </div>
+{% endfor %}
+{% endblock content %}
+
+<!-- Пагинация -->
+ {% block pagination %}
+        <div class="pagination_rounded">
+          <nav aria-label="Page navigation example">
+              <ul>
+                {% for p in paginator.page_range %}
+                {% if page_obj.number == p %}
+                  <li>{{ p }}</li>
+                {% else %}
+                <li>
+                  <a class="prev" href="?page={{ p }}&q={{ query }}">{{ p }}</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+            </nav>
+        </div>
+{% endblock pagination  %}
