@@ -77,7 +77,7 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, FormMixin, Det
         return reverse('book_detail', kwargs={'pk': self.object.id})
 
     def get_context_data(self, **kwargs):
-        """Метод который добавляем данные в шаблон"""
+        """Метод, который добавляем данные в шаблон"""
         context = super(BookDetailView, self).get_context_data(**kwargs)  # пишем метод get_context_data  и вызываем
         # супер нашего родителя, таким образом мы получаем словарь, после обрашаемся к context что бы добавить новые
         # элементы паременны и так далее
@@ -101,7 +101,7 @@ class BookDetailView(LoginRequiredMixin, PermissionRequiredMixin, FormMixin, Det
 
         form.book = self.get_object()  # Получаем от get_object таблицу id модели Book и связываем коментарий с ней
 
-        form.save()  # Сохряняем комментарий
+        form.save()  # Сохраняем комментарий
         return super(BookDetailView, self).form_valid(form)
 
 
@@ -118,7 +118,7 @@ class SearchResultsView(ListView):
         """
         context = super(SearchResultsView, self).get_context_data(**kwargs)  # пишем метод get_context_data  и вызываем
         # супер нашего родителя, таким образом мы получаем словарь, после обрашаемся к context что бы добавить новые
-        # элементы паременны и так далее
+        # элементы переменных и так далее
         context['query'] = self.request.GET.get('q')
         return context
 

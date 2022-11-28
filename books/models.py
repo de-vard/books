@@ -1,5 +1,6 @@
 import uuid
 from django.contrib.auth import get_user_model
+from django.core import validators
 from django.db import models
 from django.urls import reverse
 
@@ -15,8 +16,7 @@ class Author(models.Model):
         ('b', 'Автор средний'),
         ('c', 'Автор ужастный'),
     )
-    choice = models.CharField(max_length=1, choices=CHOICE,)
-
+    choice = models.CharField(max_length=1, choices=CHOICE, )
 
     def __str__(self):
         return self.name
@@ -39,14 +39,13 @@ class Category(models.Model):
         verbose_name_plural = 'Категории'
 
 
-
 class Book(models.Model):
     """Класс книги"""
     id = models.UUIDField("ID-UUID", primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField("Название", max_length=200)
     category = models.ForeignKey(
         Category,
-        on_delete=models.SET('Вы удалили категорию'),# SET—Заносит В ПОЛе внешнего ключа указанное значение:
+        on_delete=models.SET('Вы удалили категорию'),  # SET—Заносит В ПОЛе внешнего ключа указанное значение:
         verbose_name='Категория',
         db_index=True,
         null="Без_категории",
@@ -57,12 +56,22 @@ class Book(models.Model):
         ('b', 'en'),
         ('c', 'other'),
     )
-    language = models.CharField(max_length=1, choices=CHOICE,  verbose_name="Язык", db_index=True,)
+    language = models.CharField(max_length=1, choices=CHOICE, verbose_name="Язык", db_index=True, )
     description = models.TextField('Текст описания', blank=True)
-    files = models.FileField(upload_to='book/%Y/%m/%d', blank=True, verbose_name='Файлы книг')
+    files = models.FileField(
+        upload_to='book/%Y/%m/%d',
+        verbose_name='Файлы книг',
+        validators=[validators.FileExtensionValidator(
+            allowed_extensions=('epub', 'fb2', 'mobi', 'kf8', 'azw', 'lrf', 'txt', 'doc', 'dock', 'pdf'))],
+        error_messages={
+            'invalid_extension': 'Этот формат не подерживается'
+        }
+
+    )
+
     author = models.ForeignKey(
         Author,
-        on_delete=models.DO_NOTHING, # НЕ чего не делать при удалении первичного класса
+        on_delete=models.DO_NOTHING,  # НЕ чего не делать при удалении первичного класса
         verbose_name='Автор'
     )
     price = models.DecimalField('Ценна', max_digits=6, decimal_places=2)
@@ -98,18 +107,19 @@ class Review(models.Model):
     book = models.ForeignKey(
         Book,
         on_delete=models.CASCADE,
-        related_name='reviews' # related_name — (По простому ты сможешь из первичного класса обращатся к вторичному ) имя атрибута записи первичной модели, предназначенного для доступа к связанным записям вторичной модели, в виде строки
+        related_name='reviews'
+        # related_name — (По-простому ты сможешь из первичного класса обращатся к вторичному) имя атрибута записи
+        # первичной модели, предназначенного для доступа к связанным записям вторичной модели, в виде строки
     )
-    review = models.CharField( max_length=255)
+    review = models.CharField(max_length=255)
     author = models.ForeignKey(get_user_model(), on_delete=models.CASCADE, verbose_name='Автор')
     date_posted = models.DateTimeField(auto_now_add=True, blank=True, null=2008)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')  #
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
 
     class Meta:
         verbose_name = 'Коментарий'
         verbose_name_plural = 'Коментарии'
         ordering = ['-date_posted']  # cортируем (эта сортировка применяется везде)
-
 
     def __str__(self):
         return self.review
